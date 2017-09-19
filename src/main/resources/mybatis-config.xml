@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="config.properties"></properties>
+	<environments default="read">
+		<environment id="write">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver.write}" />
+				<property name="url" value="${jdbc.url.write}" />
+				<property name="username" value="${jdbc.username.write}" />
+				<property name="password" value="${jdbc.password.write}" />
+			</dataSource>
+		</environment>
+		<environment id="read">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver.read}" />
+				<property name="url" value="${jdbc.url.read}" />
+				<property name="username" value="${jdbc.username.read}" />
+				<property name="password" value="${jdbc.password.read}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="server/mapper/HrmUserInfoMapper.xml" />
+	</mappers>
+</configuration>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--数据库驱动-->
+    <classPathEntry    location="C:\Users\Lisen\.gradle\caches\modules-2\files-2.1\mysql\mysql-connector-java\6.0.6\1d19b184dbc596008cc71c83596f051c3ec4097f\mysql-connector-java-6.0.6.jar"/>
+    <context id="first"    targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection  driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://dbs.qimonjy.cn?serverTimezone=UTC" userId="wuser" password="1020210">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="server.model" targetProject="log_sys">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="server.mapper" targetProject="log_sys">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="server.dao" targetProject="log_sys">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        
+        
+        <!--生成对应表及类名-->
+        <table tableName="hrm_userinfo" domainObjectName="HrmUserInfo" 
+        >
+        	<property name="useActualColumnNames" value="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
