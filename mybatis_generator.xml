@@ -11,30 +11,32 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接地址账号密码-->
-        <jdbcConnection  driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://dbs.qimonjy.cn?serverTimezone=UTC" userId="wuser" password="1020210">
+        <jdbcConnection  driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://www.xiaolisheng.cn?serverTimezone=UTC" userId="root" password="root123456">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!--生成Model类存放位置-->
-        <javaModelGenerator targetPackage="server.model" targetProject="log_sys">
+        <javaModelGenerator targetPackage="indi.lisen.model" targetProject="MyDemo">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--生成映射文件存放位置-->
-        <sqlMapGenerator targetPackage="server.mapper" targetProject="log_sys">
+        <sqlMapGenerator targetPackage="indi.lisen.mapper" targetProject="MyDemo">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成Dao类存放位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="server.dao" targetProject="log_sys">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="indi.lisen.dao" targetProject="MyDemo">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         
         
         <!--生成对应表及类名-->
-        <table tableName="hrm_userinfo" domainObjectName="HrmUserInfo" 
+        <table tableName="users" domainObjectName="Users" 
+        
         >
         	<property name="useActualColumnNames" value="true"/>
+        	
         </table>
     </context>
 </generatorConfiguration>
