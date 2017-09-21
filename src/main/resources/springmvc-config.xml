@@ -11,27 +11,13 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 ">
-
-	<context:component-scan base-package="indi.lisen.service,indi.lisen.aspects" />
-	<context:annotation-config/>
-	<aop:aspectj-autoproxy/>
-
+	<mvc:annotation-driven/>
+	<context:component-scan base-package="indi.lisen.controller" />
 	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:config.properties</value>
-			</list>
-		</property>
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<import resource="spring-jdbc.xml"/>
-
-<!-- 	<aop:config> -->
-<!-- 		<aop:pointcut expression="execution(* indi.lisen.service.*Service.* (..))" id="p1"/> -->
-<!-- 		<aop:aspect ref="timeHandle"> -->
-<!-- 			<aop:before method="startTime" pointcut-ref="p1" /> -->
-<!-- 			<aop:after method="endTime" pointcut-ref="p1"/> -->
-<!-- 		</aop:aspect> -->
-<!-- 	</aop:config> -->
+<!--     <mvc:resources mapping="*.html" location="/" cache-period="31556926"/>  -->
 </beans>
