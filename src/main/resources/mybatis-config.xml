@@ -3,19 +3,26 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<properties resource="mybatis/config.properties"></properties>
-	<environments default="default">
-		<environment id="default">
+	<!-- 加载初始化配置文件 -->
+	<properties resource="config.properties"></properties>
+	
+	<!-- 和Spring整合后environment配置都会被干掉 -->
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用jdbc事务管理，目前由mybatis来管理 -->
 			<transactionManager type="JDBC" />
+			<!--数据库连接池，目前由mybatis来管理 -->
 			<dataSource type="POOLED">
-				<property name="driver" value="${jdbc.driver}" />
-				<property name="url" value="${jdbc.url}" />
-				<property name="username" value="${jdbc.username}" />
-				<property name="password" value="${jdbc.password}" />
+				<property name="driver" value="${db.driver}" />
+				<property name="url" value="${db.url}" />
+				<property name="username" value="${db.username}" />
+				<property name="password" value="${db.password}" />
 			</dataSource>
 		</environment>
 	</environments>
+	
+	<!-- 批量加载mapper 和spring整合后，使用mapper扫描器，这里不需要配置了    -->
 	<mappers>
-		<mapper resource="indi/lisen/mybatis/mapper/UsersMapper.xml" />
+		<mapper resource="indi/lisen/mapper/UsersMapper.xml" />
 	</mappers>
 </configuration>

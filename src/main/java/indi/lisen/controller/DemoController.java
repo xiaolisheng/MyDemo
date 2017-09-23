@@ -38,4 +38,10 @@ public class DemoController {
 	public Object dbTest1() {
 		return demoService.dbTest1();
 	}
+
+	@RequestMapping("/dbtest2")
+	@ResponseBody
+	public Object dbTest2() {
+		return demoService.dbTest2();
+	}
 }
