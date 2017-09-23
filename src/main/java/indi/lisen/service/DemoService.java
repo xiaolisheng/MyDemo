@@ -18,4 +18,9 @@ public class DemoService {
 		String str = "insert into users(name) values('name1'),('name2'),('name3')";
 		jdbcTemplate.update(str);
 	}
+
+	public Object dbTest1() {
+		String str = "select * from users limit 10";
+		return jdbcTemplate.queryForList(str);
+	}
 }

@@ -33,4 +33,9 @@ public class DemoController {
 		demoService.dbTest();
 		return "this is a dbtest";
 	}
+	@RequestMapping("/dbtest1")
+	@ResponseBody
+	public Object dbTest1() {
+		return demoService.dbTest1();
+	}
 }
