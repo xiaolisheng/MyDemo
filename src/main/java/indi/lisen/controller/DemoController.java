@@ -44,4 +44,10 @@ public class DemoController {
 	public Object dbTest2() {
 		return demoService.dbTest2();
 	}
+
+	@RequestMapping("/dbtest3")
+	@ResponseBody
+	public Object dbTest3() throws Exception {
+		return demoService.dbTest3();
+	}
 }

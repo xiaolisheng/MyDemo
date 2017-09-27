@@ -18,8 +18,8 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	<!-- 启动注解自动注入 -->
 	<context:annotation-config />
 
-	<!-- 启动spring-aop自动代理 -->
-	<aop:aspectj-autoproxy />
+	<!-- 启动spring-aop自动代理,注解风格支持调用aop代理对像 -->
+	<aop:aspectj-autoproxy expose-proxy="true" />
 
 	<!-- 加载初始化配置文件 -->
 	<bean
@@ -35,17 +35,16 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	<import resource="spring-datasource.xml" />
 
 	<!-- springjdbc的JdbcTemplate配置 -->
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource">
-			<ref bean="dynamicDataSource" />
-		</property>
-	</bean>
+<!-- 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> -->
+<!-- 		<property name="dataSource" ref="dataSource1"> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 	<!-- mybatis的SqlSessionFactory配置，使用动态数据源 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dynamicDataSource"></property>
+		<property name="dataSource" ref="atomikosDataSource2"></property>
 		<property name="mapperLocations" value="classpath:indi/lisen/mapper/*.xml"></property>
-<!-- 		<property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
+		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
 		<property name="typeAliasesPackage" value="indi.lisen.model" />
 		<property name="plugins">
 			<array>
@@ -72,6 +71,37 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 
 	</bean>
+
+
+	<!-- atomikos多数据库事务管理器 -->
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close">
+		<property name="forceShutdown" value="true"/>
+	</bean>
+
+	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+		<property name="transactionTimeout" value="30000" />
+	</bean>
+
+	<!-- spring 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="transactionManager">
+			<ref bean="atomikosTransactionManager" />
+		</property>
+		<property name="userTransaction">
+			<ref bean="atomikosUserTransaction" />
+		</property>
+	</bean>
+	
+	<!-- spring的单数据库事务管理 -->
+	<bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dynamicDataSource"></property>
+	</bean>
+
+	<!-- 设置为第二执行 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		order="2" />
+		
 
 	<!-- xml配置文件形式的aop，已被注解方式代替 -->
 	<!-- <aop:config> -->

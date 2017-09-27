@@ -5,13 +5,14 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import indi.lisen.db.DynamicDataSource;
 
 @Aspect
 @Component
-public class DBAspects {
+public class DBAspects implements Ordered {
 	@Pointcut("execution(public * indi.lisen.service.*Service.*(..))")
 	private void everyMethod() {
 	}
@@ -28,6 +29,12 @@ public class DBAspects {
 		}
 		logger.info("change datasource:" + (count % 2 + 1));
 		count++;
+	}
+
+	// 设置为最先执行
+	@Override
+	public int getOrder() {
+		return 1;
 	}
 
 }
