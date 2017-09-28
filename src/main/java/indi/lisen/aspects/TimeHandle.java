@@ -6,11 +6,12 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class TimeHandle {
+public class TimeHandle implements Ordered {
 
 	long start;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,5 +30,10 @@ public class TimeHandle {
 	@After("everyMethod()")
 	public void endTime() {
 		logger.info("本次时间：" + (System.currentTimeMillis() - start) + "ms");
+	}
+
+	@Override
+	public int getOrder() {
+		return 1;
 	}
 }

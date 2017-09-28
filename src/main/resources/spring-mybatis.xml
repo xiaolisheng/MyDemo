@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd   
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd   
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+">
+	<!-- mybatis的SqlSessionFactory配置，使用动态数据源 -->
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="atomikosDataSource1"></property>
+		<property name="mapperLocations" value="classpath:indi/lisen/mapper/*.xml"></property>
+		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
+		<property name="typeAliasesPackage" value="indi.lisen.model" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>
+							helperDialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+
+	<!-- mybatis的自动扫描 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+
+		<!-- basePackage 属性是映射器接口文件的包路径。 你可以使用分号或逗号 作为分隔符设置多于一个的包路径 -->
+		<property name="basePackage" value="indi.lisen.dao" />
+
+		<!-- 因为会自动装配 SqlSessionFactory和SqlSessionTemplate 所以没 有必 要 去 指 定 SqlSessionFactory或 
+			SqlSessionTemplate 因此可省略不配置； 但是,如果你使 用了一个 以上的 DataSource，那么自动装配可能会失效。 这种 
+			情况下，你可以使用sqlSessionFactoryBeanName或sqlSessionTemplateBeanName属性来设置正确的 bean名称来使用； -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"></property>
+
+	</bean>
+	
+	<!-- mybatis的SqlSessionFactory配置，使用动态数据源 -->
+	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="atomikosDataSource2"></property>
+		<property name="mapperLocations" value="classpath:indi/lisen/mapper/*.xml"></property>
+		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
+		<property name="typeAliasesPackage" value="indi.lisen.model" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>
+							helperDialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+
+	<!-- mybatis的自动扫描 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="indi.lisen.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"></property>
+	</bean>
+
+	<bean id="sqlSessionTemplate1" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory1"/>
+	</bean>
+	
+	<bean id="sqlSessionTemplate2" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory2"/>
+	</bean>
+</beans>

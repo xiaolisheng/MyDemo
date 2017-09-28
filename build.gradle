@@ -40,7 +40,7 @@ dependencies {
     compile group: 'com.atomikos', name: 'transactions-jta', version: '4.0.4'
     compile group: 'com.atomikos', name: 'transactions-jdbc', version: '4.0.4'
     
-    compile group: 'javax', name: 'javaee-web-api', version: '8.0'
+    //compile group: 'javax', name: 'javaee-web-api', version: '8.0'
 }  
 
 

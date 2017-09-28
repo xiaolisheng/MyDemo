@@ -34,43 +34,22 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	<!-- 导入数据源配置文件 -->
 	<import resource="spring-datasource.xml" />
 	<import resource="spring-jta-datasource.xml"/>
+	<import resource="spring-mybatis.xml"/>
 
 	<!-- springjdbc的JdbcTemplate配置 -->
-<!-- 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> -->
-<!-- 		<property name="dataSource" ref="dataSource1"> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-
-	<!-- mybatis的SqlSessionFactory配置，使用动态数据源 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dynamicDataSource"></property>
-		<property name="mapperLocations" value="classpath:indi/lisen/mapper/*.xml"></property>
-		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
-		<property name="typeAliasesPackage" value="indi.lisen.model" />
-		<property name="plugins">
-			<array>
-				<bean class="com.github.pagehelper.PageInterceptor">
-					<property name="properties">
-						<value>
-							helperDialect=mysql
-						</value>
-					</property>
-				</bean>
-			</array>
+	<bean id="jdbcTemplate1" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="atomikosDataSource1">
 		</property>
 	</bean>
-
-	<!-- mybatis的自动扫描 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-
-		<!-- basePackage 属性是映射器接口文件的包路径。 你可以使用分号或逗号 作为分隔符设置多于一个的包路径 -->
-		<property name="basePackage" value="indi.lisen.dao" />
-
-		<!-- 因为会自动装配 SqlSessionFactory和SqlSessionTemplate 所以没 有必 要 去 指 定 SqlSessionFactory或 
-			SqlSessionTemplate 因此可省略不配置； 但是,如果你使 用了一个 以上的 DataSource，那么自动装配可能会失效。 这种 
-			情况下，你可以使用sqlSessionFactoryBeanName或sqlSessionTemplateBeanName属性来设置正确的 bean名称来使用； -->
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource1">
+		</property>
+	</bean>
+	
+	<bean id="jdbcTemplate2" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="atomikosDataSource2">
+		</property>
 	</bean>
 
 
@@ -100,8 +79,8 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	</bean>
 
 	<!-- 设置为第二执行 -->
-	<tx:annotation-driven transaction-manager="transactionManager1"
-		order="2" />
+	<tx:annotation-driven transaction-manager="transactionManager"
+		order="3" />
 		
 
 	<!-- xml配置文件形式的aop，已被注解方式代替 -->
