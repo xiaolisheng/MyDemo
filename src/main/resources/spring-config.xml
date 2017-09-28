@@ -33,6 +33,7 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 
 	<!-- 导入数据源配置文件 -->
 	<import resource="spring-datasource.xml" />
+	<import resource="spring-jta-datasource.xml"/>
 
 	<!-- springjdbc的JdbcTemplate配置 -->
 <!-- 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> -->
@@ -42,7 +43,7 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 
 	<!-- mybatis的SqlSessionFactory配置，使用动态数据源 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="atomikosDataSource2"></property>
+		<property name="dataSource" ref="dynamicDataSource"></property>
 		<property name="mapperLocations" value="classpath:indi/lisen/mapper/*.xml"></property>
 		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
 		<property name="typeAliasesPackage" value="indi.lisen.model" />
@@ -99,7 +100,7 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	</bean>
 
 	<!-- 设置为第二执行 -->
-	<tx:annotation-driven transaction-manager="transactionManager"
+	<tx:annotation-driven transaction-manager="transactionManager1"
 		order="2" />
 		
 

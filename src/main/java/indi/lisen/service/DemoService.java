@@ -3,8 +3,8 @@ package indi.lisen.service;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.transaction.UserTransaction;
 
+import org.springframework.aop.framework.AopContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -52,34 +52,34 @@ public class DemoService {
 	@Resource
 	JtaTransactionManager transactionManager;
 
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	public Object dbTest3() throws Exception {
-		UserTransaction userTx = transactionManager.getUserTransaction();
-		userTx.begin();
-		try {
-			Users user = new Users();
-			user.setName("test123456");
-			usersMapper.insert(user);
-			throw new Exception("测试多数据源事务回滚");
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			userTx.rollback();
-		}
+		// UserTransaction userTx = transactionManager.getUserTransaction();
+		// userTx.begin();
+		// try {
+		Users user = new Users();
+		user.setName("test123456");
+		usersMapper.insert(user);
+		// throw new Exception("测试多数据源事务回滚");
+		// } catch (Exception e) {
+		// System.err.println(e.getMessage());
+		// userTx.rollback();
+		// }
 
 		// try {
-		// ((DemoService) AopContext.currentProxy()).dbTest4();
+		((DemoService) AopContext.currentProxy()).dbTest4();
 		// } catch (Exception e) {
 		// System.err.println(e.getMessage());
 		// }
 		return "done";
 	}
 
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	public Object dbTest4() {
 		Users user = new Users();
 		user.setName("test654321");
 		usersMapper.insert(user);
-		throw new RuntimeException("测试多数据源事务回滚");
-		// return "done";
+		// throw new RuntimeException("测试多数据源事务回滚");
+		return "done";
 	}
 }
